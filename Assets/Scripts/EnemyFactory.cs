@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private GameObject _prefabToCreate;
     
-    public Enemy CreateEnemy(Vector3 position)
+    public GameObject Create(Vector3 position)
     {
-        Enemy newEnemy = Instantiate(_enemyPrefab, position, Quaternion.identity);
-        return newEnemy;
+        GameObject newObject = Instantiate(_prefabToCreate, position, Quaternion.identity);
+        
+        return newObject;
     }
 }
 

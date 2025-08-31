@@ -512,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13657226e5e67b34f93443779c66197f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: -7001705206953677179, guid: a09301a4399f326489875b72664b1264, type: 3}
+  _prefabToCreate: {fileID: 3973185080639900123, guid: a09301a4399f326489875b72664b1264, type: 3}
 --- !u!4 &347517336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 485500162996878305, guid: 56b9b96216bbcdb4f9582d71ddac0b74, type: 3}
