@@ -1,28 +1,37 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
     
-    private Rigidbody _rigidbody;
-    private Vector3 _movementDirection;
+    private GameObject _target;
     
-    private void Awake()
+    private void Update()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-    
-    public void Initialize(Vector3 direction)
-    {
-        _movementDirection = direction.normalized;
-        transform.rotation = Quaternion.LookRotation(_movementDirection);
-    }
-    
-    private void FixedUpdate()
-    {
-        if (_movementDirection != Vector3.zero)
+        if (_target != null)
         {
-            _rigidbody.linearVelocity = _movementDirection * _speed;
+            MoveTowardsTarget();
         }
     }
+    
+    public void Initialize(GameObject target)
+    {
+        _target = target;
+    }
+    
+    private void MoveTowardsTarget()
+    {
+        if (_target == null)
+        {
+            return;
+        }
+        
+        Vector3 targetPosition = _target.transform.position;
+        
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * _speed);
+        transform.LookAt(_target.transform);
+    }
 }
+
