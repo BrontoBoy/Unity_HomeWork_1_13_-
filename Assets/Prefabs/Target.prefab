@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bb707ee30175f4f8490c007cec93ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flagRenderer: {fileID: 1320537436829772263}
   _waypoints: []
   _speed: 3
   _reachThreshold: 0.1

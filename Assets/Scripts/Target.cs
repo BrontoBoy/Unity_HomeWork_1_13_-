@@ -2,37 +2,33 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    [SerializeField] private Renderer _flagRenderer;
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private float _speed = 3f;
     [SerializeField] private float _reachThreshold = 0.1f;
     
-    private Renderer _renderer;
     private int _currentWaypointIndex = 0;
-    
-    private void Awake()
+
+    private void Start()
     {
-        FindFlagRenderer();
+        if (_waypoints == null || _waypoints.Length == 0)
+        {
+            enabled = false;
+        }
+        
+        _reachThreshold *= _reachThreshold;
     }
     
     private void Update()
     {
-        if (_waypoints != null && _waypoints.Length > 0)
-        {
-            MoveToWaypoint();
-        }
+        MoveToWaypoint();
     }
     
-    private void FindFlagRenderer()
-    {
-        Transform flagTransform = transform.Find("Flag");
-        _renderer = flagTransform.GetComponent<Renderer>();
-    }
-
     public void SetColor(Color enemyColor)
     { 
-        if (_renderer != null)
+        if (_flagRenderer != null)
         {
-            _renderer.material.color = enemyColor;
+            _flagRenderer.material.color = enemyColor;
         }
     }
     
@@ -40,17 +36,12 @@ public class Target : MonoBehaviour
     {
         Transform currentWaypoint = _waypoints[_currentWaypointIndex];
         transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, _speed * Time.deltaTime);
-        float distance = Vector3.Distance(transform.position, currentWaypoint.position);
+        Vector3 offset = transform.position - currentWaypoint.position;
+        float distance = offset.sqrMagnitude;
         
         if (distance <= _reachThreshold)
         {
-            _currentWaypointIndex++;
-            
-            if (_currentWaypointIndex >= _waypoints.Length)
-            {
-                _currentWaypointIndex = 0;
-            }
+            _currentWaypointIndex = ++_currentWaypointIndex % _waypoints.Length;
         }
     }
 }
-
